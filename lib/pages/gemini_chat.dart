@@ -18,7 +18,7 @@ class _GeminiChatPageState extends State<GeminiChatPage> {
   
   bool _isLoading = false;
 
-  final String _apiKey = "AIzaSyAKW3oY2U3L3t7xqsWRxpO73acTi-juxt0"; // API
+  final String _apiKey = "abatukam"; // API
 
   Future<void> _sendMessage(String text) async {
     setState(() {
