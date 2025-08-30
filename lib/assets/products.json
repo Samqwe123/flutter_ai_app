@@ -1,0 +1,27 @@
+[
+  {
+    "id": "WH123",
+    "name": "Speaker",
+    "price": 322
+  },
+  {
+    "id": "YT577",
+    "name": "Vands",
+    "price": 766
+  },
+  {
+    "id": "WH005",
+    "name": "Headphones",
+    "price": 1233
+  },
+  {
+    "id": "WH007",
+    "name": "Cool item",
+    "price": "priceless"
+  },
+  {
+    "id": "WH008",
+    "name": "Another item",
+    "price": 100
+  }
+]
