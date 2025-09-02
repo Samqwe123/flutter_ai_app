@@ -1,4 +1,5 @@
 import 'package:e_commerce/pages/home_page.dart';
+import 'package:e_commerce/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatelessWidget {
@@ -41,7 +42,7 @@ class MainPage extends StatelessWidget {
               GestureDetector(
                 onTap: () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
+                  MaterialPageRoute(builder: (context) => LoginPage()),
                 ),
                 child: Container(
                   decoration: BoxDecoration(

@@ -16,7 +16,6 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     return Consumer<favoriteImage>(
       builder: (context, value, child) => Scaffold(
-        appBar: AppBar(title: Text("My Cart"), centerTitle: true),
         backgroundColor: Colors.yellow,
         body: Column(
           children: [

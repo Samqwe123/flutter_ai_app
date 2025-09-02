@@ -1,8 +1,11 @@
 import 'package:e_commerce/components/bottom_navbar.dart';
 import 'package:e_commerce/pages/cart_page.dart';
 import 'package:e_commerce/pages/gemini_chat.dart';
+import 'package:e_commerce/pages/login_page.dart';
+import 'package:e_commerce/pages/register_page.dart';
 import 'package:e_commerce/pages/shop_page.dart';
 import 'package:e_commerce/pages/social_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,12 +24,16 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  final List<Widget> _pages = [const ShopPage(), const GeminiChatPage() , const CartPage()];
+  final List<Widget> _pages = [const ShopPage(), const GeminiChatPage() , const CartPage(), LoginPage()];
+
+  final List<String> _titles = ['Shop', 'Chat', 'Cart', 'Login'];
 
   @override
   Widget build(BuildContext context) {
+    print(FirebaseAuth.instance.currentUser);
     return Scaffold(
       appBar: AppBar(
+        title: Text(_titles[_selectedIndex]),
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: Builder(
