@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/components/image_tile.dart';
 import 'package:e_commerce/models/favorite.dart';
 import 'package:e_commerce/models/image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,8 +14,17 @@ class ShopPage extends StatefulWidget {
 }
 
 class _ShopPageState extends State<ShopPage> {
-  void addItemToCart(ImageModel image) {
-    Provider.of<favoriteImage>(context, listen: false).addItemToCart(image);
+  void addItemToCart(ImageModel image) async{
+    
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+
+    await FirebaseFirestore.instance.collection('users').doc(uid).collection('cart').doc(image.id).set({
+      'id': image.id,
+      'name': image.name,
+      'price': image.price,
+      'description': image.description,
+      'imagePath': image.imagePath,
+    });
     
 
     showDialog(

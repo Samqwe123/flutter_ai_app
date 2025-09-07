@@ -1,7 +1,10 @@
+import 'package:e_commerce/app/auth_service.dart';
 import 'package:e_commerce/components/bottom_navbar.dart';
 import 'package:e_commerce/pages/cart_page.dart';
+import 'package:e_commerce/pages/game_test.dart';
 import 'package:e_commerce/pages/gemini_chat.dart';
 import 'package:e_commerce/pages/login_page.dart';
+import 'package:e_commerce/pages/main_page.dart';
 import 'package:e_commerce/pages/register_page.dart';
 import 'package:e_commerce/pages/shop_page.dart';
 import 'package:e_commerce/pages/social_page.dart';
@@ -24,9 +27,9 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  final List<Widget> _pages = [const ShopPage(), const GeminiChatPage() , const CartPage(), LoginPage()];
+  final List<Widget> _pages = [const ShopPage(), const GeminiChatPage() , const CartPage(), const GamePage()];
 
-  final List<String> _titles = ['Shop', 'Chat', 'Cart', 'Login'];
+  final List<String> _titles = ['Shop', 'Chat', 'Cart', 'Game'];
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +51,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       drawer: Drawer(
+        width: 220,
         backgroundColor: Colors.grey[900],
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,6 +70,9 @@ class _HomePageState extends State<HomePage> {
                     leading: Icon(Icons.home, color: Colors.white),
                     title: Text('Home'),
                     textColor: Colors.white,
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                    },
                   ),
                 ),
 
@@ -86,6 +93,10 @@ class _HomePageState extends State<HomePage> {
                 leading: Icon(Icons.logout, color: Colors.white),
                 title: Text('logout'),
                 textColor: Colors.white,
+                onTap: () async{
+                  await authService.value.signOut();
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MainPage()));
+                },
               ),
             ),
           ],

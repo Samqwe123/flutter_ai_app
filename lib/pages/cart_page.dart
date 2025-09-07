@@ -13,6 +13,15 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   @override
+
+  void initState(){
+    super.initState();
+
+    Future.microtask(() {
+      Provider.of<favoriteImage>(context, listen: false).fetchUserCart();
+    });
+  }
+  
   Widget build(BuildContext context) {
     return Consumer<favoriteImage>(
       builder: (context, value, child) => Scaffold(
