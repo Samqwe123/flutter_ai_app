@@ -26,7 +26,7 @@ class _InfoPageState extends State<InfoPage> {
     fetchUserStats(
       widget.controller2.text, // User ID
       widget.controller.text, // Game ID
-      'put your api key here', // API Key
+      'put_your_api_key_here', // API Key
     );
   }
 
@@ -54,8 +54,18 @@ class _InfoPageState extends State<InfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    final achievements = achievementsData?['playerstats']?['achievements'] ?? [];
-    final schemaAchievements = schemaData?['game']?['availableGameStats']?['achievements'] ?? [];
+    final achievements =
+        achievementsData?['playerstats']?['achievements'] ?? [];
+    final schemaAchievements =
+        schemaData?['game']?['availableGameStats']?['achievements'] ?? [];
+    //progress bar calculation :)
+    final totalAchievements = achievements.length;
+    final unlockedAchievements = achievements
+        .where((item) => item['achieved'] == 1)
+        .length;
+    final progress = totalAchievements > 0
+        ? (unlockedAchievements / totalAchievements)
+        : 0.0;
 
     if (achievementsData == null) {
       return Center(child: CircularProgressIndicator());
@@ -66,13 +76,55 @@ class _InfoPageState extends State<InfoPage> {
       body: Column(
         children: [
           Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.lightBlueAccent[200],
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            ),
             child: Column(
               children: [
-                Text('User ID: ${widget.controller2.text}'),
                 SizedBox(height: 10),
-                Text('Game ID: ${widget.controller.text}'),
-                Text('Game name: ${achievementsData?['playerstats']?['gameName'] ?? 'N/A'}'),
+                Text(
+                  'User ID: ${widget.controller2.text}',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 SizedBox(height: 10),
+                Text(
+                  'Game ID: ${widget.controller.text}',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Game name: ${achievementsData?['playerstats']?['gameName'] ?? 'N/A'}',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+
+                Container(
+                  color: Colors.grey[200],
+                  child: Column(
+                    children: [
+                      Text(
+                        'Achievements Unlocked: $unlockedAchievements/ $totalAchievements',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(width: 10),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: LinearProgressIndicator(
+                            value: progress,
+                            minHeight: 8,
+                            backgroundColor: Colors.grey[300],
+                            color: Colors.lightGreenAccent[700],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -91,7 +143,9 @@ class _InfoPageState extends State<InfoPage> {
                         orElse: () => null,
                       );
                       final iconUrl = schemaAchievement != null
-                          ? (isAchieved ? schemaAchievement['icon'] : schemaAchievement['icongray'])
+                          ? (isAchieved
+                                ? schemaAchievement['icon']
+                                : schemaAchievement['icongray'])
                           : null;
 
                       return Container(
@@ -119,7 +173,7 @@ class _InfoPageState extends State<InfoPage> {
                                   return Icon(Icons.broken_image, size: 50);
                                 },
                               ),
-                              SizedBox(height: 4),
+                            SizedBox(height: 4),
                             Text(
                               achievement['name'] ??
                                   achievement['apiname'] ??
